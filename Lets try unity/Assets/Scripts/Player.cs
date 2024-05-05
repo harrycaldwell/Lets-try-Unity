@@ -59,6 +59,18 @@ public class Player : MonoBehaviour
 
         // Applies velocity
         rig.velocity = dir;
+
+        if (Input.GetKeyDown(KeyCode.LeftShift))
+        {
+            moveSpeed *= 2;
+        }
+
+
+        else if (Input.GetKeyUp(KeyCode.LeftShift))
+        {
+            //sprinting = false;
+            moveSpeed /= 2;
+        }
     }
 
     void CamLook()

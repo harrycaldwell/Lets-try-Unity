@@ -4,18 +4,18 @@ using UnityEngine;
 
 public class Weapon : MonoBehaviour
 {
-    public GameObject bulletPrefab;
-    public Transform muzzle;
+    public ObjectPool bulletPool;
+    public Transform muzzle;            // Spawn position for bullets
 
-    public int curAmmo;
-    public int maxAmmo;
-    public bool infiniteAmmo;
+    public int curAmmo;                 // Current ammount of ammo
+    public int maxAmmo;                 // Max ammount of ammo
+    public bool infiniteAmmo;           // Do we have infinite ammo (only for bots)
 
-    public float bulletSpeed;
+    public float bulletSpeed;           // Initial velocity of the bullets
 
-    public float shootRate;
-    private float lastShootTime;
-    private bool isPlayer;
+    public float shootRate;             // Minimum time between the shots
+    private float lastShootTime;        // Last time the player shot a bullet
+    private bool isPlayer;              // Is this the players weapon?
 
     // Start is called before the first frame update
     void Start()
@@ -42,7 +42,10 @@ public class Weapon : MonoBehaviour
         lastShootTime = Time.time;
         curAmmo--;
 
-        GameObject bullet = Instantiate(bulletPrefab, muzzle.position, muzzle.rotation);
+        GameObject bullet = bulletPool.GetObject();
+
+        bullet.transform.position = muzzle.position;
+        bullet.transform.rotation = muzzle.rotation;
 
         // Sets the velocity
         bullet.GetComponent<Rigidbody>().velocity = muzzle.forward * bulletSpeed;
