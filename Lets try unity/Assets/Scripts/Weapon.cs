@@ -23,6 +23,7 @@ public class Weapon : MonoBehaviour
         // Checks if is attached to the player
         if(GetComponent<Player>())
             isPlayer = true;
+
     }
 
     // Checks to see if the able to shoot

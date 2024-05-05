@@ -19,7 +19,7 @@ public class ObjectPool : MonoBehaviour
         }
     }
     
-    GameObject CreateNewObject()
+    public GameObject CreateNewObject()
     {
         GameObject obj = Instantiate(objPrefab);
         obj.SetActive(false);
@@ -27,12 +27,12 @@ public class ObjectPool : MonoBehaviour
 
         return obj;
     }
-    
+
     public GameObject GetObject()
     {
         GameObject obj = pooledObjs.Find(x => x.activeInHierarchy == false);
 
-        if(obj == null)
+        if (obj == null)
         {
             obj = CreateNewObject();
         }
@@ -41,4 +41,5 @@ public class ObjectPool : MonoBehaviour
 
         return obj;
     }
+
 }
