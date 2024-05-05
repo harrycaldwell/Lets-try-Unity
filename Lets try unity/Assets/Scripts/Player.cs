@@ -17,17 +17,33 @@ public class Player : MonoBehaviour
 
     private Camera cam;
     private Rigidbody rig;
+    private Weapon weapon;
 
     void Start()
     {
         // Gets the components
         cam = Camera.main;
         rig = GetComponent<Rigidbody>();
+        weapon = GetComponent<Weapon>();
+
+        // disables cursor
+        Cursor.lockState = CursorLockMode.Locked;
+
     }
 
     void Update()
     {
         Move();
+
+        if (Input.GetButtonDown("Jump"))
+            TryJump();
+
+        if(Input.GetButton("Fire1"))
+        {
+            if (weapon.CanShoot())
+                weapon.Shoot();
+        }
+
         CamLook();
     }
 
@@ -38,8 +54,11 @@ public class Player : MonoBehaviour
         float x = Input.GetAxis("Horizontal") * moveSpeed;
         float z = Input.GetAxis("Vertical") * moveSpeed;
 
+        Vector3 dir = transform.right * x + transform.forward * z;
+        dir.y = rig.velocity.y;
+
         // Applies velocity
-        rig.velocity = new Vector3(x, rig.velocity.y, z);
+        rig.velocity = dir;
     }
 
     void CamLook()
@@ -49,7 +68,17 @@ public class Player : MonoBehaviour
 
         rotX = Mathf.Clamp(rotX, minLookX, maxLookX);
 
-        cam.transform.localRotation = Quaternion.Euler(rotX, 0, 0);
+        cam.transform.localRotation = Quaternion.Euler(-rotX, 0, 0);
         transform.eulerAngles += Vector3.up * y;
+    }
+
+    void TryJump()
+    {
+        // Creates a ray cast that shoots downwards
+        Ray ray = new Ray(transform.position, Vector3.down);
+
+        // Detects if the ray cast hits an object and decides if up force is applied to the player
+        if(Physics.Raycast(ray, 1.1f))
+            rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 }
