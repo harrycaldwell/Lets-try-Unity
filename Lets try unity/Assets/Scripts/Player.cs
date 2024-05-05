@@ -98,7 +98,7 @@ public class Player : MonoBehaviour
             rig.AddForce(Vector3.up * jumpForce, ForceMode.Impulse);
     }
 
-   /* public void TakeDamage (int damage)
+    public void TakeDamage (int damage)
     {
         curHP -= damage;
 
@@ -109,5 +109,5 @@ public class Player : MonoBehaviour
     void Die()
     {
 
-    }*/
+    }
 }

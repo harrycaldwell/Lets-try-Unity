@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour
 {
-    /*
+    
     public int damage;      // Damage the bullet does
     public float lifetime;  // How long the bullet lasts
     private float shootTime;
@@ -20,8 +20,8 @@ public class Bullet : MonoBehaviour
         if (Time.time - shootTime >= lifetime)
             gameObject.SetActive(false);
     }
-    */
-    /*void OnTriggerEnter(Collider other)
+    
+    void OnTriggerEnter(Collider other)
     {
         // Was the player hit?
         if (other.CompareTag("Player"))
@@ -33,5 +33,5 @@ public class Bullet : MonoBehaviour
         // Disables the bullets
         gameObject.SetActive(false) ;
     }
-    */
+    
 }

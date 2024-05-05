@@ -45,6 +45,12 @@ public class Enemy : MonoBehaviour
         {
             ChaseTarget();
         }
+
+        // Allows for the enemy to look at the target
+        Vector3 dir = (target.transform.position - transform.position).normalized;
+        float angle = Mathf.Atan2(dir.x, dir.z) * Mathf.Rad2Deg;
+
+        transform.eulerAngles = Vector3.up * angle;
     }
 
     void ChaseTarget()
@@ -67,5 +73,18 @@ public class Enemy : MonoBehaviour
 
         // save that as a list
         path = navMeshPath.corners.ToList();
+    }
+
+    public void TakeDamage(int damage)
+    {
+        curHP -= damage;
+
+        if (curHP <= 0)
+            Die();
+    }
+
+    void Die()
+    {
+        Destroy(gameObject);
     }
 }
